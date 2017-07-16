@@ -1,0 +1,9 @@
+form {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    align-self: flex-end;
+}

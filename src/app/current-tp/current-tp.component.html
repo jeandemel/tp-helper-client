@@ -1,0 +1,14 @@
+<h1>Current TP</h1>
+
+<h2>{{currentTp.title}}</h2>
+
+<ul>
+    <li *ngFor="let step of currentTp.steps">{{step.label}} {{step.state}}</li>
+</ul>
+
+
+
+
+
+
+<button (click)="add()">Add</button>

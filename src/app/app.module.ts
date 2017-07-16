@@ -6,21 +6,25 @@ import {MdButtonModule, MdInputModule} from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { CurrentTpComponent } from "./current-tp/current-tp.component";
+import { HelpRequestComponent } from "./help-request/help-request.component";
+import { TpService } from "./shared/tp.service";
+import { SocketService } from "./shared/socket.service";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthenticationComponent
-  ],
   imports: [
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     MdButtonModule,
     MdInputModule
-    
   ],
-  providers: [],
+  declarations: [
+    AppComponent,
+    CurrentTpComponent,
+    AuthenticationComponent,
+    HelpRequestComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

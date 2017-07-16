@@ -1,7 +1,13 @@
-<md-input-container>
-  <input mdInput type="email" placeholder="Email"/>
-</md-input-container>
-<md-input-container>
-  <input mdInput type="password" placeholder="Password"/>
-</md-input-container>
+<form (submit)="login()">
+  <md-input-container>
+    <input mdInput type="email" placeholder="Email" name="email" [(ngModel)]="email" />
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="password" placeholder="Password" name="pass" [(ngModel)]="pass" />
+  </md-input-container>
+
   <button md-raised-button>Login</button>
+
+{{msg}}
+
+</form>
