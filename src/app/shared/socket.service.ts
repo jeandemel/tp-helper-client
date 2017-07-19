@@ -7,6 +7,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
@@ -60,5 +61,13 @@ export class SocketService  {
 
     getHelpList() {
         this.socket.emit('help-list');
+    }
+
+    delHelp(help:Help) {
+        this.socket.emit('help-success', help);
+    }
+
+    addHelp(subject:string) {
+        this.socket.emit('help-request', subject);
     }
 }
