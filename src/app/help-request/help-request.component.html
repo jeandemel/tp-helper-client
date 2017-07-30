@@ -1,18 +1,19 @@
-<h1>Qui a besoin d'aide ?</h1>
-<form (submit)="addHelp()">
-    <label for="subject">Sujet : </label>
-    <md-input-container>
-        <input mdInput type="text" name="subject" [(ngModel)]="subject">
-    </md-input-container>
-    <button md-raised-button>Besoin d'aide</button>
-</form>
+<md-list>
+    <h1 md-subheader>Qui a besoin d'aide ?</h1>
+    <md-list-item *ngFor="let help of helps | async">
+        <h4 md-line>{{help.user.pseudo}}</h4>
+        <p md-line>sujet : {{help.subject}}</p>
 
-<ul>
-    <li *ngFor="let help of helps | async">
-        {{help.user.pseudo}}: {{help.subject}}
-        <button md-mini-fab *ngIf="help.user._id === user._id || user.rights ===1"
-        (click)="done(help)">
-            <md-icon>check</md-icon>
+        <button mdSuffix md-button *ngIf="help.user._id === user._id || user.rights ===1" (click)="done(help)">
+            <md-icon>done</md-icon>
         </button>
-    </li>
-</ul>
+    </md-list-item>
+
+</md-list>
+
+<form (submit)="addHelp()">
+    <md-input-container>
+        <input mdInput type="text" name="subject" [(ngModel)]="subject" placeholder="J'ai besoin d'aide sur...">
+        <button class="btnAdd" mdSuffix><md-icon>add</md-icon></button>
+    </md-input-container>
+</form>

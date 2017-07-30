@@ -1,6 +1,6 @@
+import {SocketService} from '../shared/socket.service';
 import {TP} from '../shared/tp';
 import {OnInit, Component} from '@angular/core';
-import {TpService} from '../shared/tp.service';
 import { Step } from "../shared/step";
 
 @Component({
@@ -10,15 +10,15 @@ import { Step } from "../shared/step";
 export class CurrentTpComponent implements OnInit {
     currentTp: TP;
 
-    constructor(private tpService: TpService){}
+    constructor(private socketService:SocketService){}
 
     ngOnInit() {
         
-        this.tpService.getLastTp().subscribe(tp => this.currentTp = tp);
+        this.socketService.activeTp$.subscribe(tp => this.currentTp = tp);
     }
 
     add() {
-        this.tpService.addTp(new TP('test', [new Step('etape test')], new Date()));
+        // this.socketService.addTp(new TP('test', [new Step('etape test')], new Date()));
     }
 
 }

@@ -2,13 +2,12 @@ import {AuthenticationComponent} from './authentication/authentication.component
 import { FormsModule }   from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MdButtonModule, MdInputModule, MdCheckboxModule, MdIconModule } from '@angular/material';
+import { MdButtonModule, MdInputModule, MdCheckboxModule, MdIconModule, MdListModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { CurrentTpComponent } from "./current-tp/current-tp.component";
 import { HelpRequestComponent } from "./help-request/help-request.component";
-import { TpService } from "./shared/tp.service";
 import { SocketService } from "./shared/socket.service";
 
 @NgModule({
@@ -19,7 +18,8 @@ import { SocketService } from "./shared/socket.service";
     MdButtonModule,
     MdInputModule,
     MdCheckboxModule,
-    MdIconModule
+    MdIconModule,
+    MdListModule
   ],
   declarations: [
     AppComponent,

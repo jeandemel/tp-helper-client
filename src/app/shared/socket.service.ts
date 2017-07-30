@@ -1,13 +1,11 @@
+import {TP} from './tp';
 import {Help} from './help';
 import { User } from './user';
 import * as io from 'socket.io-client';
 import { Injectable,  } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
@@ -18,7 +16,8 @@ export class SocketService  {
     public socket: SocketIOClient.Socket;
     public user: User;
     public initialized: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    public helpList$: Observable<any>;
+    public helpList$: Observable<Help[]> = new Observable();
+    public activeTp$: Observable<TP> = new Observable();
 
 
     login(mail: string, pass: string):Observable<boolean> {
@@ -27,6 +26,7 @@ export class SocketService  {
         return Observable.fromEvent(this.socket, 'authenticate').map((response: { status: boolean, data: User }) => {
             if (response.status) {
                 this.user = response.data;
+                this.socket.emit('active-tp');
                 this.init();
                 this.initialized.next(true);
                 return true;
@@ -38,25 +38,8 @@ export class SocketService  {
     }
 
     init() {
-        let helpRequest$:Observable<{data:Help, status:boolean}> = <any>Observable.fromEvent(this.socket, 'help-request-response').startWith({status:false, data:null});
-        let helpSuccess$:Observable<{data:Help, status:boolean}> = <any>Observable.fromEvent(this.socket, 'help-success-response').startWith({status:false, data:null});
-        let help$:Observable<{data:Help[], status:boolean}> = Observable.fromEvent(this.socket, 'help-list-response');
-        this.helpList$ = Observable.combineLatest(help$, helpRequest$, helpSuccess$)
-            .map(([toList,toAdd,toDel]) => {
-                let list = [];
-                if(toList.status) {
-                    list = toList.data;
-                }
-                if(toAdd.status) {
-                    list.push(toAdd.data);
-                }
-                if(toDel.status) {
-                    list = list.filter((item:Help) => item._id !== toDel.data._id);
-                }
-
-                return list;
-            });
-
+        this.helpList$ = Observable.fromEvent(this.socket, 'help-list-response').map((response:{data:Help[], status:boolean}) => response.data);
+        this.activeTp$ = Observable.fromEvent(this.socket, 'active-tp-response').map((response:{data:TP, status:boolean}) => response.data);
     }
 
     getHelpList() {

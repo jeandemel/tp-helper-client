@@ -21,8 +21,8 @@ export class HelpRequestComponent implements OnInit {
 
     ngOnInit(): void {
         this.socketService.getHelpList();
-         this.helps = this.socketService.helpList$;
-         this.user = this.socketService.user;
+        this.helps = this.socketService.helpList$;
+        this.user = this.socketService.user;
 
     }
 
@@ -32,7 +32,7 @@ export class HelpRequestComponent implements OnInit {
 
     addHelp() {
         this.socketService.addHelp(this.subject);
-
+        this.subject = '';
     }
 
 

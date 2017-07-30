@@ -1,3 +1,4 @@
 
-    <authentication *ngIf="!sockInit"></authentication>
-    <help-request *ngIf="sockInit"></help-request>
+    <authentication *ngIf="!activeTp"></authentication>
+    <help-request *ngIf="activeTp === null"></help-request>
+    <current-tp *ngIf="activeTp !== null"></current-tp>
