@@ -1,0 +1,19 @@
+.progress {
+    border-radius: 45%;
+    padding:6px;
+    background-color:#9e9e9e;
+    color:white;
+}
+
+.progress[data-progress="0"] {
+    background-color: #fdd835;
+    color:black;
+}
+.progress[data-progress="1"] {
+    background-color: #e53935;
+    color:white;
+}
+.progress[data-progress="2"] {
+    background-color: #4caf50;
+    color:white;
+}

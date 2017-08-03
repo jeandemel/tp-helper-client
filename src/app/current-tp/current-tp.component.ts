@@ -1,24 +1,36 @@
 import {SocketService} from '../shared/socket.service';
 import {TP} from '../shared/tp';
-import {OnInit, Component} from '@angular/core';
+import { OnInit, Component, Input } from '@angular/core';
 import { Step } from "../shared/step";
+import { TpProgress } from "../shared/tp-progress";
 
 @Component({
     selector: 'current-tp',
-    templateUrl: './current-tp.component.html'
+    templateUrl: './current-tp.component.html',
+    styleUrls: ['./current-tp.component.css']
 })
 export class CurrentTpComponent implements OnInit {
+    @Input()
     currentTp: TP;
+    @Input()
+    tpProgress:TpProgress[];
+    myProgress:TpProgress;
+
+    progress: number[] = [];
 
     constructor(private socketService:SocketService){}
 
     ngOnInit() {
-        
-        this.socketService.activeTp$.subscribe(tp => this.currentTp = tp);
+        let prog = this.tpProgress.find((progress) => progress.userId === this.socketService.user._id);
+        if(typeof(prog) === 'undefined') {
+            this.myProgress = new TpProgress(this.socketService.user._id, this.currentTp._id, []);
+        }else{
+            this.myProgress = prog;
+        }
     }
 
-    add() {
-        // this.socketService.addTp(new TP('test', [new Step('etape test')], new Date()));
+    changeProgress() {
+        this.socketService.changeProgress(this.myProgress);
     }
 
 }

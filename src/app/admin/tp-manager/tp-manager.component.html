@@ -1,0 +1,36 @@
+<md-input-container>
+  <input mdInput type="text" placeholder="TP Label" name="label" [(ngModel)]="currentTp.label" />
+</md-input-container>
+
+<md-list *ngIf="currentTp">
+  <md-list-item *ngFor="let step of currentTp.steps; let clef = index; trackBy: trackIndex">
+    <span md-list-icon>{{clef+1}}</span>
+    <md-input-container>
+      <input mdInput type="text" placeholder="étape" name="description" [(ngModel)]="currentTp.steps[clef]" />
+    </md-input-container>
+    <button mdSuffix md-button (click)="removeStep(clef)">
+            <md-icon>clear</md-icon>
+        </button>
+
+    <ng-container *ngIf="progresses">
+      <span class="progress" *ngFor="let progress of progresses" [attr.data-progress]="progress.state[clef]">
+        {{getUserName(progress.userId)}}        
+      </span>
+    </ng-container>
+  </md-list-item>
+  <md-list-item>
+    <md-input-container>
+      <input mdInput type="text" placeholder="nouvelle étape" name="newStep" [(ngModel)]="newStep" />
+    </md-input-container>
+    <button mdSuffix md-button *ngIf="newStep" (click)="addStep()">
+            <md-icon>add</md-icon>
+        </button>
+
+  </md-list-item>
+
+</md-list>
+
+<md-slide-toggle [(ngModel)]="currentTp.active">TP Actif</md-slide-toggle>
+
+
+<button md-raised-button (click)="apply()">Appliquer</button>

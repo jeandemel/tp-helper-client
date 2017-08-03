@@ -1,4 +1,6 @@
 
     <authentication *ngIf="!activeTp"></authentication>
+
+    <admin *ngIf="user && user.rights === 1"></admin>
     <help-request *ngIf="activeTp === null"></help-request>
-    <current-tp *ngIf="activeTp !== null"></current-tp>
+     <current-tp *ngIf="activeTp && activeTp !== null && user.rights !== 1" [currentTp]="activeTp" [tpProgress]="progress"></current-tp> 

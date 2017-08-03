@@ -1,14 +1,25 @@
-<h1>Current TP</h1>
+<md-list>
+    <h1 md-subheader>{{currentTp.label}}</h1>
+    <md-list-item *ngFor="let step of currentTp.steps; let clef = index">
+        <span md-list-icon>{{clef+1}}</span>
+        <p class="list-text">{{step}}</p>
 
-<h2>{{currentTp.title}}</h2>
+        <md-select mdSuffix placeholder="Progression" [(ngModel)]="myProgress.state[clef]" (change)="changeProgress()" floatPlaceholder="never">
+            <md-option [value]="0">
+                En cours
+            </md-option>
+            <md-option [value]="1">
+                Bloqué
+            </md-option>
+            <md-option [value]="2">
+                Terminé
+            </md-option>
+        </md-select>
+    </md-list-item>
 
-<ul>
-    <li *ngFor="let step of currentTp.steps">{{step.label}} {{step.state}}</li>
-</ul>
+</md-list>
 
 
 
 
 
-
-<button (click)="add()">Add</button>

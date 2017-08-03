@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SocketService } from "../shared/socket.service";
 
 
@@ -9,7 +9,8 @@ import { SocketService } from "../shared/socket.service";
     templateUrl: './authentication.component.html',
     styleUrls: ['./authentication.component.css']
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit {
+    
     @Input()
     private email:string;
     @Input()
@@ -18,16 +19,18 @@ export class AuthenticationComponent {
 
     constructor(private socketService:SocketService){}
 
+    ngOnInit(): void {
+        // this.socketService.user$.subscribe((data) => {
+        //     if(typeof(data) !== 'object') {
+        //         this.msg = data;
+        //     } else {
+        //         this.msg = '';
+        //     }
+        // });
+    }
 
     login() {
-        this.socketService.login(this.email, this.pass).subscribe((logged) => {
-            console.log(logged);
-            if(!logged) {
-                this.msg = 'Erreur d\'authentification';
-            }else {
-                this.msg = '';
-            }
-        });
+        this.socketService.login(this.email, this.pass);
     }
 
 }
